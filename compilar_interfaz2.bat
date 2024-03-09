@@ -1,0 +1,1 @@
+pyuic5 interfaz2.ui -o interfaz_ver.py
