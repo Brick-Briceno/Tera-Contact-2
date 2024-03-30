@@ -1,0 +1,78 @@
+/*Tema Tera-Contact 2*/
+/* Estilo para todos los elementos */
+* {
+    background-color: #0c010f;
+    color: #e4d50a;
+}
+
+QTabBar::tab {
+    background-color: black;
+    color: #8c06b4;
+    font-size: 15px;
+    width: 70px;
+    height: 25px;
+	border-radius: 8px;
+}
+
+/* Estilo para el encabezado de la tabla */
+QHeaderView::section {
+    background-color: black;
+    color: rgb(156, 158, 12);
+}
+
+/* Estilo para QLineEdit y QPushButton */
+QLineEdit, QPushButton {
+    border: 2px solid gray;
+    border-radius: 10px;
+}
+
+/* Estilo para QLineEdit cuando el mouse está sobre él */
+QLineEdit:hover {
+    border: 2px solid white;
+    transition: border-color 0.5s ease-in-out;
+}
+
+/* Estilo para QLineEdit cuando pierde el foco */
+QLineEdit:focus {
+    border: 2px solid gray;
+    transition: border-color 0.5s ease-in-out;
+}
+
+/* Estilo para QPushButton cuando el mouse está sobre él */
+QPushButton:hover {
+    border: 2px solid white;
+    transition: border-color 0.7s ease-in-out;
+}
+
+/* Estilo para QPushButton cuando pierde el foco */
+QPushButton:focus {
+    border: 2px solid gray;
+    transition: border-color 1s ease-in-out;
+}
+
+/* Estilo para QFrame */
+QFrame {
+    border-radius: 3px;
+    background-color: #22002c;
+}
+
+/* Estilo para QSlider */
+
+QSlider {
+    background: #111;
+}
+
+QSlider::groove:horizontal {
+    border: 1px;
+    background: #bbb;
+    height: 10px;
+    border-radius: 5px;
+}
+
+QSlider::handle:horizontal {
+    background: #777;
+    width: 15px;
+    margin-top: -2px;
+    margin-bottom: -2px;
+    border-radius: 7px;
+}
