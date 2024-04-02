@@ -249,17 +249,17 @@ class sistema:
                 return
 
         for x in texto.splitlines():
-            hay_h = sistema.hay_horario(x)#función para el horario
+            hay_h = sistema.hay_horario(x)#función para el horario, arroja un bool->
 
             #Direción
-            if "Puerto Rico" in x and "+" in x and not dire:
+            if "España" in x and "+" in x and not dire:
                 dire = True
                 data[2] = x
 
             #Telefono
-            elif "+1"  in x and not tele:
+            elif "+34"  in x and not tele:
                 tele = True
-                data[1] = x[3:]
+                data[1] = sistema.numero_34(x)
                 t = open(sistema.nombre_de_archivo, "r")
                 if data[1] in t.read():
                     sistema.mostrar_mensaje("Telefono repetido")
@@ -336,7 +336,7 @@ class sistema:
         ventana.browser.load(QUrl("file:///Tutorial/index.html"))
         ventana.browser.setZoomFactor(1)
         ventana.buscador.setText("El mejor tutorial de TODOS! 😎🔥")
-        ventana.statusBar().showMessage("¿Como usar Tera Contact 2? 🤔")
+        ventana.statusBar.showMessage("¿Como usar Tera Contact 2? 🤔")
 
 class MiVentana(QMainWindow, Ui_MainWindow):
     valor = True
@@ -388,6 +388,7 @@ class MiVentana(QMainWindow, Ui_MainWindow):
         self.copiar.triggered.connect(sistema.copiar_tabla)
         self.eliminar.triggered.connect(sistema.eliminar_contacto)
         self.borrar_todos.triggered.connect(sistema.eliminar_todo)
+        self.full.triggered.connect(pantalla_completa)
         self.salir.triggered.connect(self.close)
 
         #Como usar
