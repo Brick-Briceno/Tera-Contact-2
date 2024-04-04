@@ -176,6 +176,7 @@ class Ui_MainWindow(object):
         self.tabla_contactos.setSizeIncrement(QtCore.QSize(0, 0))
         self.tabla_contactos.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.tabla_contactos.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
+        self.tabla_contactos.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tabla_contactos.setRowCount(16)
         self.tabla_contactos.setColumnCount(5)
         self.tabla_contactos.setObjectName("tabla_contactos")

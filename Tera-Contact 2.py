@@ -157,22 +157,32 @@ class sistema:
         sistema.crear_base()
         sistema.actualizar_celdas()
 
+
+    def crear_base():
+        with open(sistema.nombre_de_archivo, "w") as file:
+            file.write("")
+
+    def eliminar_todo():
+        sistema.crear_base()
+        sistema.actualizar_celdas()
+
     def eliminar_contacto():
         if sistema.magia_posicion == "vacio":
             sistema.mostrar_mensaje("Seleciona un contacto para eliminarlo")
             return
+
         n = sistema.magia_posicion
-        nombre = sistema.leer_celda_en_archivo_tsv(sistema.nombre_de_archivo, sistema.magia_posicion, 0)
-        if nombre == None:
-            sistema.mostrar_mensaje("Seleciona un contacto para eliminarlo")
-            return
-        
-        tlfn = sistema.leer_celda_en_archivo_tsv(sistema.nombre_de_archivo, sistema.magia_posicion, 1)
+        sistema.magia_posicion = "vacio"
+
+        nombre = sistema.leer_celda_en_archivo_tsv(sistema.nombre_de_archivo, n, 0)
+        tlfn = sistema.leer_celda_en_archivo_tsv(sistema.nombre_de_archivo, n, 1)
         sistema.eliminar_fila(sistema.nombre_de_archivo, n)
         sistema.actualizar_celdas()
-        sistema.mostrar_mensaje(f"Se Eliminó:\n {nombre}\n" + tlfn)
-        sistema.magia_posicion = "vacio"
-    
+        sistema.escribir_en_celda(sistema.nombre_de_archivo, 0, 0, nombre)
+        if not(nombre == None or tlfn == None):
+            sistema.mostrar_mensaje(f"Se Eliminó:\n {nombre}\n" + tlfn)
+            return
+
     index_pestana = 0
     def cambiar_pestana():
         sistema.index_pestana += 1
@@ -456,7 +466,6 @@ try:#Revisar y cargar la ultima url
     f = open("ultima Url.txt", "r")
     ultima_url = f.read()
     f.close()
-
 except:
     ultima_url = "https://www.google.es/maps"
 

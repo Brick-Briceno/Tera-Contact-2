@@ -308,6 +308,9 @@ QSlider::handle:horizontal {
              <property name="sizeAdjustPolicy">
               <enum>QAbstractScrollArea::AdjustIgnored</enum>
              </property>
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
              <property name="rowCount">
               <number>16</number>
              </property>
