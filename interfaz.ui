@@ -108,7 +108,7 @@ QSlider::handle:horizontal {
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="pestanas">
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -367,6 +367,14 @@ QSlider::handle:horizontal {
                <string>Pagina</string>
               </property>
              </column>
+             <item row="0" column="0">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="flags">
+               <set>ItemIsSelectable|ItemIsEditable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+              </property>
+             </item>
             </widget>
            </item>
            <item>
@@ -471,12 +479,7 @@ QSlider::handle:horizontal {
           </column>
           <column>
            <property name="text">
-            <string>Direción</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Horario</string>
+            <string>Interes</string>
            </property>
           </column>
           <column>
@@ -486,12 +489,17 @@ QSlider::handle:horizontal {
           </column>
           <column>
            <property name="text">
+            <string>Horario</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
             <string>Pagina Web</string>
            </property>
           </column>
           <column>
            <property name="text">
-            <string>Interes</string>
+            <string>Direción</string>
            </property>
           </column>
          </widget>

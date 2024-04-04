@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QShortcut, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QShortcut, QMessageBox, QHeaderView
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtCore import QUrl, Qt
 from PyQt5.QtGui import QKeySequence
@@ -50,11 +50,21 @@ class sistema:
         if not os.path.exists(sistema.nombre_de_archivo): return
         filas = sistema.cuantas_celdas_hay()
         sistema.cantidad_celdas(ventana.tabla_contactos, filas+1, 5)
+        sistema.cantidad_celdas(ventana.tabla_contactos_2, filas+1, 7)
         for fila in range(filas):
-            for columna in range(5):
+            for columna in range(7):
                 texto = sistema.leer_celda_en_archivo_tsv(sistema.nombre_de_archivo, fila, columna)
                 if texto == None: texto = ""
-                else: sistema.cambiar_texto_celda(ventana.tabla_contactos, texto, fila, columna)
+                else:
+                    #Orden de datos: 0 Nombre, 1 Telefono, 2 Interes,
+                    #3 Dueño Nombre, 4 Horario, 5 Pagina Web, 6 Direción
+                    sistema.cambiar_texto_celda(ventana.tabla_contactos_2, texto, fila, columna)
+                    #Ordenar 1ra tabla
+                    if columna == 0: sistema.cambiar_texto_celda(ventana.tabla_contactos, texto, fila, 0)
+                    elif columna == 1: sistema.cambiar_texto_celda(ventana.tabla_contactos, texto, fila, 1)
+                    elif columna == 6: sistema.cambiar_texto_celda(ventana.tabla_contactos, texto, fila, 2)
+                    elif columna == 4: sistema.cambiar_texto_celda(ventana.tabla_contactos, texto, fila, 3)
+                    elif columna == 5: sistema.cambiar_texto_celda(ventana.tabla_contactos, texto, fila, 4)
 
     def escribir_en_celda(nombre_archivo, fila, columna, valor):
         # Verifica si el archivo existe
@@ -100,8 +110,16 @@ class sistema:
         except FileNotFoundError:
             print(f"El archivo '{nombre_archivo}' no existe.")
             return None
-    
-    
+
+    def celda_editada(item):
+        fila = item.row()
+        columna = item.column()
+        texto = item.text()
+        if sistema.magia_posicion != "vacio":
+            sistema.magia_posicion = "vacio"
+            sistema.escribir_en_celda(sistema.nombre_de_archivo, fila, columna, texto.strip())
+            sistema.actualizar_celdas()
+
     def eliminar_fila(nombre_archivo, fila):
         # Verifica si el archivo existe
         if not os.path.exists(nombre_archivo):
@@ -148,11 +166,29 @@ class sistema:
         if nombre == None:
             sistema.mostrar_mensaje("Seleciona un contacto para eliminarlo")
             return
+        
         tlfn = sistema.leer_celda_en_archivo_tsv(sistema.nombre_de_archivo, sistema.magia_posicion, 1)
         sistema.eliminar_fila(sistema.nombre_de_archivo, n)
         sistema.actualizar_celdas()
         sistema.mostrar_mensaje(f"Se Eliminó:\n {nombre}\n" + tlfn)
         sistema.magia_posicion = "vacio"
+    
+    index_pestana = 0
+    def cambiar_pestana():
+        sistema.index_pestana += 1
+        if sistema.index_pestana > 2: sistema.index_pestana = 0
+        ventana.pestanas.setCurrentIndex(sistema.index_pestana)
+
+    def copy_cell(row, column):
+        #Esta función copia el contenido de la celda seleccionada al portapapeles
+        clipboard = QApplication.clipboard()
+        item = ventana.tabla_contactos_2.item(row, column)
+        if item == None: return
+        text = item.text()
+        if text in [" ", ""]: return
+        if column == 1: text = "0034" + text.replace(" ", "")
+        clipboard.setText(text)
+
 
     invertido = False
     def invetir_color():
@@ -234,7 +270,9 @@ class sistema:
         posicion = ventana.tabla_contactos.rowCount()
         dire = False
         tele = False
-        data = [""]*5 #nombre, telefono, dirección, horario, pagina
+        #Orden de datos: 0 Nombre, 1 Telefono, 2 Interes,
+        #3 Dueño Nombre, 4 Horario, 5 Pagina Web, 6 Direción
+        data = [""]*7
         texto = ventana.browser.page().selectedText()
         #texto = sistema.limpiar_texto(texto)
         nombre = ""
@@ -254,7 +292,7 @@ class sistema:
             #Direción
             if "España" in x and "+" in x and not dire:
                 dire = True
-                data[2] = x
+                data[6] = x
 
             #Telefono
             elif "+34"  in x and not tele:
@@ -268,17 +306,20 @@ class sistema:
 
             #Horario
             elif hay_h[0]:
-                data[3] = hay_h[1]
+                data[4] = hay_h[1]
 
             #Pagina Web
-            elif ".com" in x or ".net" in x: data[4] = x
+            elif ".com" in x or ".net" in x: data[5] = x
 
         if not(dire * tele):
             sistema.mostrar_mensaje("Faltan datos para el contacto")
             return
 
+        #Orden de datos: 0 Nombre, 1 Telefono, 2 Interes,
+        #3 Dueño Nombre, 4 Horario, 5 Pagina Web, 6 Direción
         for x in enumerate(data):
             sistema.escribir_en_celda(sistema.nombre_de_archivo, posicion-1, x[0], sistema.limpiar_texto(x[1]))
+
         sistema.actualizar_celdas()
 
         ventana.tabla_contactos.verticalScrollBar().setValue(sistema.cuantas_celdas_hay()-12)
@@ -324,6 +365,10 @@ class sistema:
         sistema.magia_posicion = fila
         #print(sistema.magia_posicion)
 
+    def celda2_selec(fila, col):
+        sistema.magia_posicion = fila
+        sistema.copy_cell(fila, col)
+
     def copiar_tabla():
         try:
             a = open(sistema.nombre_de_archivo, encoding="utf-8").read() + "\n"
@@ -336,7 +381,7 @@ class sistema:
         ventana.browser.load(QUrl("file:///Tutorial/index.html"))
         ventana.browser.setZoomFactor(1)
         ventana.buscador.setText("El mejor tutorial de TODOS! 😎🔥")
-        ventana.statusBar.showMessage("¿Como usar Tera Contact 2? 🤔")
+        ventana.statusbar.showMessage("¿Como usar Tera Contact 2? 🤔")
 
 class MiVentana(QMainWindow, Ui_MainWindow):
     valor = True
@@ -371,6 +416,9 @@ class MiVentana(QMainWindow, Ui_MainWindow):
 
         "Tablas"
         self.tabla_contactos.cellClicked.connect(sistema.celda_selec)
+        self.tabla_contactos_2.cellClicked.connect(sistema.celda2_selec)
+        self.tabla_contactos_2.itemChanged.connect(sistema.celda_editada)
+        self.tabla_contactos_2.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         "Atajos"
         QShortcut(QKeySequence("F1"), self, sistema.tutorial)
@@ -381,6 +429,7 @@ class MiVentana(QMainWindow, Ui_MainWindow):
         QShortcut(QKeySequence("Ctrl+Shift+D"), self, sistema.eliminar_contacto)
         QShortcut(QKeySequence("Ctrl+Shift+C"), self, sistema.copiar_tabla)
         QShortcut(QKeySequence("Ctrl+Shift+T"), self, sistema.cambiar_tema)
+        QShortcut(QKeySequence("Ctrl+P"), self, sistema.cambiar_pestana)
 
         "Menu bars"
         #Tera Contact 2
@@ -425,7 +474,6 @@ except: None
 try:#Cargar temas
     sistema.temas = os.listdir("temas")
 except: None
-
 
 #Un saludo, tienes que ser cordial Hdp!
 ventana.statusbar.showMessage("Bienvenido a Tera Contact 2! 😎✨")
