@@ -47,7 +47,7 @@ class sistema:
             return sum(1 for _ in archivo)
 
     def actualizar_celdas():
-        if not os.path.exists(sistema.nombre_de_archivo): return
+        if not os.path.exists(sistema.nombre_de_archivo): sistema.crear_base()
         filas = sistema.cuantas_celdas_hay()
         sistema.cantidad_celdas(ventana.tabla_contactos, filas+1, 5)
         sistema.cantidad_celdas(ventana.tabla_contactos_2, filas+1, 7)
@@ -117,8 +117,66 @@ class sistema:
         texto = item.text()
         if sistema.magia_posicion != "vacio":
             sistema.magia_posicion = "vacio"
+            ventana.statusbar.showMessage("Ningún contacto selecionado")
             sistema.escribir_en_celda(sistema.nombre_de_archivo, fila, columna, texto.strip())
             sistema.actualizar_celdas()
+
+    def buscar_datos():
+        t = open(sistema.nombre_de_archivo, "r")
+        txt = t.read()
+        t.close()
+        eureca = ventana.buscador_datos.text().strip().upper()
+        si = False
+        lugar = 0
+        resultados = 0
+        for x in enumerate(txt.split("\n")):
+            if eureca in x[1].strip().upper():
+                resultados += 1
+                if not si:
+                    lugar = x[0]
+                    si = True
+        if si:
+            ventana.tabla_contactos_2.verticalScrollBar().setValue(lugar)
+            if not resultados-1: ventana.statusbar.showMessage(f"{resultados} resultado encontrado")
+            else: ventana.statusbar.showMessage(f"{resultados} resultados encontrados")
+        else: ventana.statusbar.showMessage("No se ha encontrado ningun resultado")
+
+    def interes_n(f, c):
+        if sistema.magia_posicion == "vacio":
+            sistema.mostrar_mensaje("Seleciona un contacto para definir el interes")
+            return
+        interes = ("Interesado", "Nah", "Contestadora",
+                   "Llamar por la mañana", "El jefe no viene regularmete")
+        sistema.escribir_en_celda(sistema.nombre_de_archivo,
+                                  sistema.magia_posicion, 2, interes[c])
+        sistema.actualizar_celdas()
+        sistema.magia_posicion = "vacio"
+
+    def definir_fecha(fecha):
+        if not fecha.isValid(): return
+        #fecha.toPyDate()
+        #ano = fecha.year()
+        mes = str(fecha.month())
+        dia = fecha.day()
+        meses = {1:"Enero", 2:"Febrero", 3:"Marzo", 4:"Abril",
+                 5:"Mayo", 6:"Jinio", 7:"Julio", 8:"Agosto", 9:"Septiembre",
+                 10:"Octubre", 11:"Noviembre", 12:"Diciembre"}
+        mes = mes.replace(mes, meses[int(mes)])
+        dato = f"Llamar el {dia} de {mes}"
+        ventana.crear_dato_fecha.setText(dato)
+
+    def llamar_el_dia():
+        if sistema.magia_posicion == "vacio":
+            ventana.pestana_ver.setCurrentIndex(0)
+            sistema.mostrar_mensaje("Seleciona un Contacto para agregar esta fecha de llamada")
+            return
+        
+        sistema.escribir_en_celda(sistema.nombre_de_archivo,
+                                  sistema.magia_posicion, 2,
+                                  ventana.crear_dato_fecha.text())
+        ventana.pestana_ver.setCurrentIndex(0)
+        sistema.actualizar_celdas()
+        sistema.magia_posicion = "vacio"
 
     def eliminar_fila(nombre_archivo, fila):
         # Verifica si el archivo existe
@@ -157,7 +215,6 @@ class sistema:
         sistema.crear_base()
         sistema.actualizar_celdas()
 
-
     def crear_base():
         with open(sistema.nombre_de_archivo, "w") as file:
             file.write("")
@@ -173,12 +230,12 @@ class sistema:
 
         n = sistema.magia_posicion
         sistema.magia_posicion = "vacio"
+        ventana.statusbar.showMessage(f"Ningún contacto selecionado")
 
         nombre = sistema.leer_celda_en_archivo_tsv(sistema.nombre_de_archivo, n, 0)
         tlfn = sistema.leer_celda_en_archivo_tsv(sistema.nombre_de_archivo, n, 1)
         sistema.eliminar_fila(sistema.nombre_de_archivo, n)
         sistema.actualizar_celdas()
-        sistema.escribir_en_celda(sistema.nombre_de_archivo, 0, 0, nombre)
         if not(nombre == None or tlfn == None):
             sistema.mostrar_mensaje(f"Se Eliminó:\n {nombre}\n" + tlfn)
             return
@@ -277,6 +334,7 @@ class sistema:
 
     magia_posicion = "vacio"
     def magia2():
+        sistema.magia_posicion = "vacio"
         posicion = ventana.tabla_contactos.rowCount()
         dire = False
         tele = False
@@ -328,11 +386,12 @@ class sistema:
         #Orden de datos: 0 Nombre, 1 Telefono, 2 Interes,
         #3 Dueño Nombre, 4 Horario, 5 Pagina Web, 6 Direción
         for x in enumerate(data):
-            sistema.escribir_en_celda(sistema.nombre_de_archivo, posicion-1, x[0], sistema.limpiar_texto(x[1]))
+            sistema.escribir_en_celda(sistema.nombre_de_archivo,
+                                      posicion-1, x[0], sistema.limpiar_texto(x[1]))
 
         sistema.actualizar_celdas()
 
-        ventana.tabla_contactos.verticalScrollBar().setValue(sistema.cuantas_celdas_hay()-12)
+        ventana.tabla_contactos.verticalScrollBar().setValue(sistema.cuantas_celdas_hay()-10)
         sistema.actualizar_status_bar()
 
     promedio_list = []
@@ -373,11 +432,8 @@ class sistema:
 
     def celda_selec(fila, col):
         sistema.magia_posicion = fila
-        #print(sistema.magia_posicion)
-
-    def celda2_selec(fila, col):
-        sistema.magia_posicion = fila
         sistema.copy_cell(fila, col)
+        ventana.statusbar.showMessage(f"Contacto {fila+1} selecionado")
 
     def copiar_tabla():
         try:
@@ -394,7 +450,7 @@ class sistema:
         ventana.statusbar.showMessage("¿Como usar Tera Contact 2? 🤔")
 
 class MiVentana(QMainWindow, Ui_MainWindow):
-    valor = True
+    valor = False
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -412,6 +468,8 @@ class MiVentana(QMainWindow, Ui_MainWindow):
         self.adelante.clicked.connect(sistema.ir_adelante)
         self.copiar_link.clicked.connect(sistema.copiar_link)
         self.invertir.clicked.connect(sistema.invetir_color)
+        self.anadir_calendario.clicked.connect(sistema.llamar_el_dia)
+        self.buscar.clicked.connect(sistema.buscar_datos)
 
         "Sliders"
         self.resolucion.valueChanged.connect(sistema.resolucion)
@@ -421,14 +479,24 @@ class MiVentana(QMainWindow, Ui_MainWindow):
         self.browser.load(QUrl("https://www.google.com/maps"))
         self.browser.urlChanged.connect(sistema.cambiar_url_y_guardar)
         self.frame_web.layout().addWidget(self.browser)
+
+        "Line Edits"
         self.buscador.returnPressed.connect(sistema.cargar_url)
         self.buscador.setPlaceholderText("Introduzca la URL")
+        self.buscador_datos.returnPressed.connect(sistema.buscar_datos)
+        self.buscador_datos.setPlaceholderText("¿Qué quieres buscar? 🤔")
 
         "Tablas"
         self.tabla_contactos.cellClicked.connect(sistema.celda_selec)
-        self.tabla_contactos_2.cellClicked.connect(sistema.celda2_selec)
+        self.tabla_contactos_2.cellClicked.connect(sistema.celda_selec)
+        self.tabla_contactos_2.itemChanged.connect(sistema.celda_editada)
         self.tabla_contactos_2.itemChanged.connect(sistema.celda_editada)
         self.tabla_contactos_2.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.interes_llamada.cellClicked.connect(sistema.interes_n)
+
+        "Calendario"
+        self.calendario.clicked.connect(sistema.definir_fecha)
+        #self.calendario.setSelectedDate(QDate.currentDate())
 
         "Atajos"
         QShortcut(QKeySequence("F1"), self, sistema.tutorial)
@@ -459,7 +527,7 @@ ventana.show()
 
 "Funciones de inicio"
 
-# Verificar si el archivo existe
+#Verificar si el archivo existe
 if not os.path.exists(sistema.nombre_de_archivo): sistema.crear_base()
 
 try:#Revisar y cargar la ultima url

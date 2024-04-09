@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>588</width>
-    <height>413</height>
+    <width>888</width>
+    <height>424</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,6 +23,7 @@
   <property name="styleSheet">
    <string notr="true">/*Tema Tera-Contact 2*/
 /* Estilo para todos los elementos */
+
 * {
     background-color: black;
     color: white;
@@ -99,14 +100,10 @@ QSlider::handle:horizontal {
     margin-bottom: -2px;
     border-radius: 7px;
 }
-
-
-
-
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
      <widget class="QTabWidget" name="pestanas">
       <property name="currentIndex">
@@ -400,111 +397,378 @@ QSlider::handle:horizontal {
        <attribute name="title">
         <string>Ver</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout_8">
         <item>
-         <widget class="QTableWidget" name="tabla_contactos_2">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
+         <widget class="QTabWidget" name="pestana_ver">
+          <property name="tabPosition">
+           <enum>QTabWidget::South</enum>
           </property>
-          <property name="horizontalScrollBarPolicy">
-           <enum>Qt::ScrollBarAsNeeded</enum>
+          <property name="currentIndex">
+           <number>0</number>
           </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QAbstractScrollArea::AdjustIgnored</enum>
-          </property>
-          <property name="alternatingRowColors">
-           <bool>false</bool>
-          </property>
-          <property name="sortingEnabled">
-           <bool>false</bool>
-          </property>
-          <property name="rowCount">
-           <number>16</number>
-          </property>
-          <property name="columnCount">
-           <number>7</number>
-          </property>
-          <attribute name="horizontalHeaderCascadingSectionResizes">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="horizontalHeaderHighlightSections">
-           <bool>true</bool>
-          </attribute>
-          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="horizontalHeaderStretchLastSection">
-           <bool>true</bool>
-          </attribute>
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderCascadingSectionResizes">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderHighlightSections">
-           <bool>true</bool>
-          </attribute>
-          <attribute name="verticalHeaderShowSortIndicator" stdset="0">
-           <bool>false</bool>
-          </attribute>
-          <attribute name="verticalHeaderStretchLastSection">
-           <bool>false</bool>
-          </attribute>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <column>
-           <property name="text">
-            <string>Nombre</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Telefono</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Interes</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Dueño Nombre</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Horario</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Pagina Web</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Direción</string>
-           </property>
-          </column>
+          <widget class="QWidget" name="tab_4">
+           <attribute name="title">
+            <string>CMR</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QFrame" name="frame_5">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>58</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>45</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_7">
+               <item>
+                <widget class="QTableWidget" name="interes_llamada">
+                 <property name="minimumSize">
+                  <size>
+                   <width>700</width>
+                   <height>47</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="editTriggers">
+                  <set>QAbstractItemView::NoEditTriggers</set>
+                 </property>
+                 <attribute name="horizontalHeaderVisible">
+                  <bool>false</bool>
+                 </attribute>
+                 <attribute name="verticalHeaderVisible">
+                  <bool>false</bool>
+                 </attribute>
+                 <row>
+                  <property name="text">
+                   <string>0</string>
+                  </property>
+                 </row>
+                 <column>
+                  <property name="text">
+                   <string>New Column</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>New Column</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>New Column</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>New Column</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>New Column</string>
+                  </property>
+                 </column>
+                 <item row="0" column="0">
+                  <property name="text">
+                   <string>Interesado</string>
+                  </property>
+                 </item>
+                 <item row="0" column="1">
+                  <property name="text">
+                   <string>Nah</string>
+                  </property>
+                 </item>
+                 <item row="0" column="2">
+                  <property name="text">
+                   <string>Contestadora</string>
+                  </property>
+                 </item>
+                 <item row="0" column="3">
+                  <property name="text">
+                   <string>Llamar por la mañana</string>
+                  </property>
+                 </item>
+                 <item row="0" column="4">
+                  <property name="text">
+                   <string>El jefe no viene regularmete</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_3">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>38</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="buscador_datos">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>28</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="buscar">
+                 <property name="minimumSize">
+                  <size>
+                   <width>45</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Buscar</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTableWidget" name="tabla_contactos_2">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="horizontalScrollBarPolicy">
+               <enum>Qt::ScrollBarAsNeeded</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QAbstractScrollArea::AdjustIgnored</enum>
+              </property>
+              <property name="alternatingRowColors">
+               <bool>false</bool>
+              </property>
+              <property name="sortingEnabled">
+               <bool>false</bool>
+              </property>
+              <property name="rowCount">
+               <number>16</number>
+              </property>
+              <property name="columnCount">
+               <number>7</number>
+              </property>
+              <attribute name="horizontalHeaderCascadingSectionResizes">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="horizontalHeaderHighlightSections">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderCascadingSectionResizes">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderHighlightSections">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="verticalHeaderStretchLastSection">
+               <bool>false</bool>
+              </attribute>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <row/>
+              <column>
+               <property name="text">
+                <string>Nombre</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Telefono</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Interes</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Dueño Nombre</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Horario</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Pagina Web</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Direción</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_5">
+           <attribute name="title">
+            <string>Calendario</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <item>
+             <widget class="QFrame" name="frame_6">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_8">
+               <item>
+                <widget class="QPushButton" name="anadir_calendario">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Añadir</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="crear_dato_fecha">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>28</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCalendarWidget" name="calendario">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">* {color: #888}</string>
+              </property>
+              <property name="inputMethodHints">
+               <set>Qt::ImhNone</set>
+              </property>
+              <property name="firstDayOfWeek">
+               <enum>Qt::Monday</enum>
+              </property>
+              <property name="gridVisible">
+               <bool>true</bool>
+              </property>
+              <property name="horizontalHeaderFormat">
+               <enum>QCalendarWidget::LongDayNames</enum>
+              </property>
+              <property name="verticalHeaderFormat">
+               <enum>QCalendarWidget::NoVerticalHeader</enum>
+              </property>
+              <property name="navigationBarVisible">
+               <bool>true</bool>
+              </property>
+              <property name="dateEditEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
@@ -542,13 +806,13 @@ QSlider::handle:horizontal {
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>235</width>
+                <width>243</width>
                 <height>2480</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_6">
                <item>
-                <widget class="QTextEdit" name="textEdit_2">
+                <widget class="QTextEdit" name="info_llamada">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -1153,7 +1417,7 @@ p, li { white-space: pre-wrap; }
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
-            <widget class="QTextEdit" name="textEdit">
+            <widget class="QTextEdit" name="speesh">
              <property name="html">
               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -1179,7 +1443,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>588</width>
+     <width>888</width>
      <height>21</height>
     </rect>
    </property>
@@ -1191,6 +1455,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="copiar"/>
     <addaction name="eliminar"/>
     <addaction name="borrar_todos"/>
+    <addaction name="tema"/>
     <addaction name="full"/>
     <addaction name="salir"/>
    </widget>
@@ -1202,7 +1467,14 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionContacta_al_Programador"/>
     <addaction name="actionAcerca_de"/>
    </widget>
+   <widget class="QMenu" name="menuHerramientas">
+    <property name="title">
+     <string>Herramientas</string>
+    </property>
+    <addaction name="actionCalendario"/>
+   </widget>
    <addaction name="menuArchivo"/>
+   <addaction name="menuHerramientas"/>
    <addaction name="menuComo_usar"/>
   </widget>
   <widget class="QStatusBar" name="statusbar">
@@ -1258,6 +1530,16 @@ p, li { white-space: pre-wrap; }
   <action name="salir">
    <property name="text">
     <string>Salir</string>
+   </property>
+  </action>
+  <action name="tema">
+   <property name="text">
+    <string>Cambiar Tema (Ctrl+Shift+T)</string>
+   </property>
+  </action>
+  <action name="actionCalendario">
+   <property name="text">
+    <string>Calendario</string>
    </property>
   </action>
  </widget>
